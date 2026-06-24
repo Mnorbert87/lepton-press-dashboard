@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lepton Press — live nano-revenue on Arc</title>
+<style>
+  :root {
+    --bg:#05070f; --panel:rgba(18,26,46,.62); --line:rgba(120,160,255,.16);
+    --ink:#eaf0ff; --dim:#8ea2cf; --arc:#3b82f6; --cyan:#22d3ee; --gold:#f5c451;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Space Grotesk",ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    background:var(--bg); color:var(--ink); min-height:100vh; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* aurora */
+  body::before{
+    content:""; position:fixed; inset:-40% -10% auto -10%; height:90vh; z-index:0;
+    background:
+      radial-gradient(40% 55% at 25% 20%,rgba(59,130,246,.28),transparent 70%),
+      radial-gradient(38% 50% at 80% 10%,rgba(34,211,238,.22),transparent 70%),
+      radial-gradient(45% 60% at 55% 45%,rgba(99,102,241,.18),transparent 70%);
+    filter:blur(40px); animation:drift 24s ease-in-out infinite alternate; pointer-events:none;
+  }
+  @keyframes drift{from{transform:translate3d(-3%,-2%,0) scale(1)}to{transform:translate3d(4%,3%,0) scale(1.08)}}
+  .wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:48px 22px 80px}
+  header{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px}
+  .logo{font-size:13px; letter-spacing:.32em; color:var(--cyan); font-weight:700}
+  h1{font-size:clamp(28px,4.5vw,46px); font-weight:700; line-height:1.05; letter-spacing:-.02em}
+  .sub{color:var(--dim); margin:14px 0 30px; max-width:62ch; line-height:1.5}
+  .meta{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px; font-size:12px}
+  .chip{
+    background:rgba(59,130,246,.1); border:1px solid var(--line); color:var(--dim);
+    padding:6px 12px; border-radius:999px; font-variant-numeric:tabular-nums;
+  }
+  .chip b{color:var(--ink); font-weight:600}
+  .chip a{color:var(--cyan); text-decoration:none}
+  .live{display:inline-flex; align-items:center; gap:7px; color:var(--cyan)}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 0 rgba(34,211,238,.6); animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,211,238,.55)}70%{box-shadow:0 0 0 9px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:26px}
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:22px;
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  }
+  .card .k{font-size:12px; color:var(--dim); letter-spacing:.04em; text-transform:uppercase}
+  .card .v{font-size:clamp(26px,3.5vw,38px); font-weight:700; margin-top:8px; font-variant-numeric:tabular-nums}
+  .card .v.gold{color:var(--gold)} .card .v.cyan{color:var(--cyan)}
+  .card .u{font-size:13px; color:var(--dim); margin-top:4px}
+  .panel{
+    background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:6px 4px;
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); margin-bottom:22px; overflow:hidden;
+  }
+  .panel h2{font-size:13px; color:var(--dim); letter-spacing:.12em; text-transform:uppercase; padding:16px 20px 10px}
+  table{width:100%; border-collapse:collapse; font-size:14px}
+  th,td{text-align:left; padding:11px 20px; border-top:1px solid var(--line); font-variant-numeric:tabular-nums}
+  th{font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:.08em; border-top:none}
+  td.num{text-align:right; color:var(--gold)}
+  tr td a{color:var(--cyan); text-decoration:none; font-family:ui-monospace,monospace; font-size:12px}
+  tr td a:hover{text-decoration:underline}
+  .empty{padding:26px 20px; color:var(--dim); font-size:14px}
+  .bar{height:5px; border-radius:3px; background:linear-gradient(90deg,var(--arc),var(--cyan)); margin-top:7px}
+  footer{margin-top:34px; color:var(--dim); font-size:12px; line-height:1.6}
+  footer code{color:var(--cyan); font-family:ui-monospace,monospace}
+  .err{color:#fca5a5}
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="logo">LEPTON&nbsp;PRESS</span>
+  </header>
+  <h1>Per-paragraph revenue, paid by machines, settled on Arc.</h1>
+  <p class="sub">
+    A card payment can't charge a tenth of a cent — the fee floor kills the long tail.
+    Here is a publisher earning <b>per paragraph</b> from autonomous AI agents reading its
+    work, in USDC on Arc. Every figure below is read live from on-chain StreamPay settlements.
+    No backend, no database — just the chain.
+  </p>
+  <div class="meta">
+    <span class="chip live"><span class="dot"></span> live · Arc testnet</span>
+    <span class="chip">publisher <b id="m-pub">…</b></span>
+    <span class="chip">StreamPay <a id="m-sp" target="_blank" rel="noopener">…</a></span>
+    <span class="chip">refreshed <b id="m-upd">…</b></span>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="k">Total nano-revenue</div><div class="v gold" id="c-rev">—</div><div class="u">USDC, from agent reads</div></div>
+    <div class="card"><div class="k">Paragraphs sold</div><div class="v" id="c-set">—</div><div class="u">on-chain settlements</div></div>
+    <div class="card"><div class="k">Paying readers</div><div class="v cyan" id="c-rdr">—</div><div class="u">distinct agent streams</div></div>
+    <div class="card"><div class="k">Avg / paragraph</div><div class="v" id="c-avg">—</div><div class="u">USDC per settlement</div></div>
+  </div>
+
+  <div class="panel">
+    <h2>Earnings by article</h2>
+    <div id="by-article"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Recent settlements</h2>
+    <div id="settlements"></div>
+  </div>
+
+  <footer id="foot"></footer>
+</div>
+
+<script type="module">
+import { ethers } from "https://esm.sh/ethers@6.13.4";
+
+// ── Config ──────────────────────────────────────────────────────────────────
+// Override any of these with URL params, e.g. ?publisher=0x…&start=0
+const q = new URLSearchParams(location.search);
+const CFG = {
+  rpc:       q.get("rpc")       || "https://rpc.testnet.arc.network",
+  chainId:   5042002,
+  streamPay: q.get("streampay") || "0x505739d33D85AD85D0f9eeE64856309782382450",
+  // The publisher (StreamPay recipient) whose revenue we display. Set via ?publisher=0x…
+  // or hard-pin here once the demo burner is funded.
+  publisher: q.get("publisher") || "0x0D09cA4F24CF66206f66DA1dc200d213327EEbDc",
+  // Arc RPC rejects eth_getLogs over wide ranges, so we scan from startBlock to head in
+  // CHUNK windows. Pin ?start=<block-before-demo> to show full demo history cheaply;
+  // otherwise we look back a modest window so the page stays fast.
+  startBlock: q.get("start") ? Number(q.get("start")) : 48248000,
+  lookback:  q.get("lookback") ? Number(q.get("lookback")) : 30000, // ~5h of Arc blocks
+  explorer:  "https://testnet.arcscan.app",
+};
+const CHUNK = 9000;            // max safe eth_getLogs span on this RPC
+const MAX_CHUNKS = 60;         // hard cap so a stale ?start= can't hammer the RPC
+const REFRESH_MS = 12000;
+
+const usd = (v) => "$" + (Number(v) / 1e6).toFixed(6);
+const short = (a) => a.slice(0, 6) + "…" + a.slice(-4);
+const $ = (id) => document.getElementById(id);
+// The article label comes from the stream memo, which any address can set on-chain.
+// Escape it before it touches innerHTML so a crafted memo can't inject markup.
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const provider = new ethers.JsonRpcProvider(CFG.rpc, CFG.chainId);
+const sp = new ethers.Contract(CFG.streamPay, [
+  "event Created(uint256 indexed id, address indexed sender, address indexed recipient, uint256 deposit, uint64 start, uint64 stop, string memo)",
+  "event Withdrawn(uint256 indexed id, address indexed recipient, uint256 amount)",
+], provider);
+
+$("m-pub").textContent = CFG.publisher === ethers.ZeroAddress ? "(set ?publisher=0x…)" : short(CFG.publisher);
+$("m-sp").textContent = short(CFG.streamPay);
+$("m-sp").href = `${CFG.explorer}/address/${CFG.streamPay}`;
+
+const articleOf = (memo) => (memo && memo.startsWith("lepton-press:")) ? memo.slice("lepton-press:".length) : (memo || "—");
+
+// Walk startBlock→head in CHUNK windows; the RPC rejects anything wider.
+async function scan(filter, fromBlock, toBlock) {
+  const out = [];
+  for (let from = fromBlock, n = 0; from <= toBlock && n < MAX_CHUNKS; from += CHUNK + 1, n++) {
+    const to = Math.min(from + CHUNK, toBlock);
+    out.push(...await sp.queryFilter(filter, from, to));
+  }
+  return out;
+}
+
+async function load() {
+  if (CFG.publisher === ethers.ZeroAddress) {
+    $("foot").innerHTML = `<span class="err">No publisher set.</span> Append <code>?publisher=0xYOUR_PUBLISHER_ADDRESS</code> to the URL to read its on-chain revenue.`;
+    return;
+  }
+  try {
+    const recipient = ethers.getAddress(CFG.publisher);
+    const head = await provider.getBlockNumber();
+    const from = CFG.startBlock != null ? CFG.startBlock : Math.max(0, head - CFG.lookback);
+
+    // Map streamId → article, from Created events to this publisher (memo carries the article).
+    const created = await scan(sp.filters.Created(null, null, recipient), from, head);
+    const article = new Map();
+    for (const e of created) article.set(e.args.id.toString(), articleOf(e.args.memo));
+
+    // Revenue = Withdrawn events to this publisher. recipient is indexed → cheap filter.
+    const paid = await scan(sp.filters.Withdrawn(null, recipient), from, head);
+
+    let total = 0n; const byArticle = {}; const readers = new Set(); const rows = [];
+    for (const e of paid) {
+      const id = e.args.id.toString();
+      const amt = e.args.amount;
+      total += amt;
+      const art = article.get(id) || "—";
+      byArticle[art] = (byArticle[art] || 0n) + amt;
+      readers.add(id);
+      rows.push({ id, art, amt, tx: e.transactionHash, block: e.blockNumber });
+    }
+    rows.reverse();
+
+    $("c-rev").textContent = usd(total);
+    $("c-set").textContent = paid.length;
+    $("c-rdr").textContent = readers.size;
+    $("c-avg").textContent = paid.length ? usd(total / BigInt(paid.length)) : "$0.000000";
+
+    // By-article bars
+    const maxA = Object.values(byArticle).reduce((m, v) => v > m ? v : m, 1n);
+    const byEl = $("by-article");
+    const arts = Object.entries(byArticle).sort((a, b) => (b[1] > a[1] ? 1 : -1));
+    byEl.innerHTML = arts.length ? `<table><thead><tr><th>Article</th><th style="text-align:right">Revenue</th></tr></thead><tbody>` +
+      arts.map(([a, v]) => `<tr><td>${esc(a)}<div class="bar" style="width:${Number(v * 100n / maxA)}%"></div></td><td class="num">${usd(v)}</td></tr>`).join("") +
+      `</tbody></table>` : `<div class="empty">No settlements yet.</div>`;
+
+    // Recent settlements
+    const setEl = $("settlements");
+    setEl.innerHTML = rows.length ? `<table><thead><tr><th>Stream</th><th>Article</th><th>Block</th><th style="text-align:right">Paid</th><th style="text-align:right">Tx</th></tr></thead><tbody>` +
+      rows.slice(0, 25).map(r => `<tr><td>#${r.id}</td><td>${esc(r.art)}</td><td>${r.block}</td><td class="num">${usd(r.amt)}</td><td style="text-align:right"><a href="${CFG.explorer}/tx/${r.tx}" target="_blank" rel="noopener">${short(r.tx)}</a></td></tr>`).join("") +
+      `</tbody></table>` : `<div class="empty">No settlements yet — run the reader agent against this publisher.</div>`;
+
+    $("m-upd").textContent = new Date().toLocaleTimeString();
+    $("foot").innerHTML = `Read directly from Arc RPC <code>${CFG.rpc}</code> — ${created.length} stream(s) opened, ${paid.length} paragraph settlement(s). This page has no server.`;
+  } catch (err) {
+    $("foot").innerHTML = `<span class="err">RPC error:</span> ${err.shortMessage || err.message}`;
+  }
+}
+
+load();
+setInterval(load, REFRESH_MS);
+</script>
+</body>
+</html>
