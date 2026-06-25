@@ -103,7 +103,7 @@
 <script type="module">
 const $=(id)=>document.getElementById(id);
 const esc=(s)=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const short=(a)=>a&&a.length>14?a.slice(0,6)+"…"+a.slice(-4):esc(a||"—");
+const short=(a)=>{a=String(a||"—");return esc(a.length>14?a.slice(0,6)+"…"+a.slice(-4):a);};
 
 async function boot(){
   let d;
