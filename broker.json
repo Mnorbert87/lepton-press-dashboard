@@ -1,0 +1,82 @@
+{
+  "question": "why can card networks not serve micropayments, and what changes it",
+  "article": "arc-nanopayments",
+  "broker": "0x2e36F4037E711e1d4c853BBCBF7F526B3714A08a",
+  "consumer": "0x63c56c17851C7b2f036F194CCb08FBc2cCC57b72",
+  "judge": {
+    "mode": "llm",
+    "model": "claude-opus-4-8"
+  },
+  "explorer": "https://testnet.arcscan.app/tx",
+  "hop1": {
+    "paragraphs": [
+      {
+        "n": 0,
+        "paidUSDC": "0.002666",
+        "tx": "0xd974400c8de38762ea011700032b483961a2b8074db7625ae18ac2f6414f9d6c",
+        "explorer": "https://testnet.arcscan.app/tx/0xd974400c8de38762ea011700032b483961a2b8074db7625ae18ac2f6414f9d6c",
+        "relevance": 78,
+        "text": "For thirty years the web has had exactly one business model that pays writers reliably: bundle the work into something big enough to justify a card charge. A subscription, a course, a paywalled month. Anything cheaper than roughly fifty cents simply could not be sold, because the payment itself cost more than the thing being bought.",
+        "judge": "Names the phenomenon — anything under ~50¢ was unsellable because the payment cost more than the item."
+      },
+      {
+        "n": 1,
+        "paidUSDC": "0.002222",
+        "tx": "0xa5048d65e9fc454335404d1de617af4ca83f99763feea58598272eaf01a65925",
+        "explorer": "https://testnet.arcscan.app/tx/0xa5048d65e9fc454335404d1de617af4ca83f99763feea58598272eaf01a65925",
+        "relevance": 92,
+        "text": "That floor was never a law of nature. It was the cost of moving money through card networks: interchange, gateway fees, fraud reserves, chargeback risk. Those costs are fixed per transaction, so they crush small payments and vanish into large ones. The long tail of writing that is worth a tenth of a cent to a reader has been economically invisible the entire time.",
+        "judge": "The core mechanism: fixed per-transaction card costs (interchange, fees, fraud, chargebacks) that crush small payments."
+      },
+      {
+        "n": 2,
+        "paidUSDC": "0.002223",
+        "tx": "0x3b05feb696f2918ad952dcb3e600708cb232ab64e822c74930f79db480aafecb",
+        "explorer": "https://testnet.arcscan.app/tx/0x3b05feb696f2918ad952dcb3e600708cb232ab64e822c74930f79db480aafecb",
+        "relevance": 88,
+        "text": "Stablecoins on a settlement-first chain change the arithmetic. When USDC is the native gas token and a block finalises in under a second, the marginal cost of a transfer collapses toward the gas itself. A payment of one millionth of a dollar stops being absurd and becomes routine. The smallest coin of antiquity, the lepton, finally has a digital equivalent.",
+        "judge": "The 'what changes it' half — USDC as native gas + sub-second finality collapses the marginal cost of a transfer."
+      },
+      {
+        "n": 3,
+        "paidUSDC": "0.002222",
+        "tx": "0x266608262c5cbb9fac5585ee99502841444bc334a5741cb22d5dfd34ebaf82f3",
+        "explorer": "https://testnet.arcscan.app/tx/0x266608262c5cbb9fac5585ee99502841444bc334a5741cb22d5dfd34ebaf82f3",
+        "relevance": 42,
+        "text": "The first buyers of nanopaid content will not be humans clicking a tip jar. They will be agents: research bots, summarisers, retrieval pipelines that read thousands of sources and would happily pay each one a fraction of a cent rather than scrape it for free. Per-read settlement turns adversarial scraping into a market, and turns every paragraph into a metered good.",
+        "judge": "Pivots to who the buyers are (agents) — useful but tangential to the cost mechanics."
+      },
+      {
+        "n": 4,
+        "paidUSDC": "0.001778",
+        "tx": "0xd108c2d901c06cbb5cf90bd04a04e1babdce9cb0df3a9ebb69008317306df517",
+        "explorer": "https://testnet.arcscan.app/tx/0xd108c2d901c06cbb5cf90bd04a04e1babdce9cb0df3a9ebb69008317306df517",
+        "relevance": 16,
+        "text": "What this needs is not a new token but a new toll booth: a way for a publisher to charge a machine per paragraph, prove the payment on chain, and release the text only after the money has actually vested. That is the whole of Lepton Press, and the rest of this article is the spec.",
+        "judge": "Turns into the implementation spec; stops answering the question."
+      }
+    ],
+    "streamId": "87",
+    "costUSDC": "0.011111"
+  },
+  "publisher": "0x0D09cA4F24CF66206f66DA1dc200d213327EEbDc",
+  "answer": "Card networks can't serve micropayments because their costs — interchange, gateway fees, fraud reserves, chargeback risk — are fixed per transaction, so anything under roughly fifty cents costs more to process than it is worth, leaving the sub-cent long tail economically invisible. What changes it is stablecoin settlement on a chain where USDC is the native gas token and blocks finalize in under a second: the marginal cost of a transfer collapses toward the gas itself, so a payment of a millionth of a dollar becomes routine rather than absurd.",
+  "synthesis": {
+    "mode": "llm",
+    "model": "claude-opus-4-8"
+  },
+  "hop2": {
+    "priceUSDC": "0.017777",
+    "markup": 0.6,
+    "streamId": "88",
+    "settledUSDC": "0.017777",
+    "tx": "0xad0534a85179ff38a1ea2e2c2443580d561dbe796cff5cfd59d4b0f880474944",
+    "explorer": "https://testnet.arcscan.app/tx/0xad0534a85179ff38a1ea2e2c2443580d561dbe796cff5cfd59d4b0f880474944"
+  },
+  "economics": {
+    "costUSDC": "0.011111",
+    "revenueUSDC": "0.017777",
+    "profitUSDC": "0.006666",
+    "markup": 0.6
+  }
+}
