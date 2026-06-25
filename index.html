@@ -4,78 +4,133 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Lepton Press — live nano-revenue on Arc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#05070f; --panel:rgba(18,26,46,.62); --line:rgba(120,160,255,.16);
-    --ink:#eaf0ff; --dim:#8ea2cf; --arc:#3b82f6; --cyan:#22d3ee; --gold:#f5c451;
+    --bg:#04050b; --bg2:#070a16;
+    --panel:rgba(15,20,38,.55); --panel2:rgba(20,27,50,.72);
+    --line:rgba(150,170,235,.12); --line2:rgba(245,196,81,.22);
+    --ink:#f4f6ff; --dim:#9aa8d4; --faint:#6b779e;
+    --arc:#4f8bff; --cyan:#34e0f0;
+    --gold:#f5c451; --gold2:#f7d98a; --champ:#e9c477;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
   body{
     font-family:"Space Grotesk",ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-    background:var(--bg); color:var(--ink); min-height:100vh; overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-  }
-  /* aurora */
-  body::before{
-    content:""; position:fixed; inset:-40% -10% auto -10%; height:90vh; z-index:0;
     background:
-      radial-gradient(40% 55% at 25% 20%,rgba(59,130,246,.28),transparent 70%),
-      radial-gradient(38% 50% at 80% 10%,rgba(34,211,238,.22),transparent 70%),
-      radial-gradient(45% 60% at 55% 45%,rgba(99,102,241,.18),transparent 70%);
-    filter:blur(40px); animation:drift 24s ease-in-out infinite alternate; pointer-events:none;
+      radial-gradient(120% 80% at 50% -10%, #0a1024 0%, var(--bg2) 38%, var(--bg) 100%) fixed;
+    color:var(--ink); min-height:100vh; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   }
-  @keyframes drift{from{transform:translate3d(-3%,-2%,0) scale(1)}to{transform:translate3d(4%,3%,0) scale(1.08)}}
-  .wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:48px 22px 80px}
-  header{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px}
-  .logo{font-size:13px; letter-spacing:.32em; color:var(--cyan); font-weight:700}
-  h1{font-size:clamp(28px,4.5vw,46px); font-weight:700; line-height:1.05; letter-spacing:-.02em}
-  .sub{color:var(--dim); margin:14px 0 30px; max-width:62ch; line-height:1.5}
-  .meta{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px; font-size:12px}
+  /* aurora — deeper, slower, with a champagne ember */
+  body::before{
+    content:""; position:fixed; inset:-45% -15% auto -15%; height:105vh; z-index:0;
+    background:
+      radial-gradient(38% 52% at 22% 18%,rgba(79,139,255,.30),transparent 70%),
+      radial-gradient(34% 46% at 82% 8%,rgba(52,224,240,.20),transparent 70%),
+      radial-gradient(30% 42% at 60% 38%,rgba(245,196,81,.14),transparent 72%),
+      radial-gradient(48% 64% at 48% 50%,rgba(99,102,241,.16),transparent 72%);
+    filter:blur(46px); animation:drift 28s ease-in-out infinite alternate; pointer-events:none;
+  }
+  /* fine film grain so flat darks feel like printed stock */
+  body::after{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  @keyframes drift{from{transform:translate3d(-3%,-2%,0) scale(1)}to{transform:translate3d(4%,3%,0) scale(1.1)}}
+  .wrap{position:relative; z-index:1; max-width:1120px; margin:0 auto; padding:56px 24px 90px}
+
+  header{display:flex; align-items:center; gap:13px; margin-bottom:30px}
+  .logo{
+    font-family:var(--mono); font-size:12px; letter-spacing:.42em; font-weight:700;
+    background:linear-gradient(90deg,var(--gold2),var(--champ)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .logo .mark{
+    display:inline-block; width:8px; height:8px; margin-right:10px; transform:rotate(45deg);
+    background:linear-gradient(135deg,var(--gold2),var(--gold)); box-shadow:0 0 14px rgba(245,196,81,.7);
+  }
+  .rule{flex:1; height:1px; background:linear-gradient(90deg,var(--line2),transparent)}
+
+  h1{
+    font-family:"Fraunces",Georgia,serif; font-size:clamp(34px,5.6vw,62px); font-weight:600;
+    line-height:1.02; letter-spacing:-.018em; max-width:18ch;
+  }
+  h1 .em{
+    font-style:italic; font-weight:800;
+    background:linear-gradient(105deg,var(--gold2) 0%,var(--champ) 55%,#caa24f 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--dim); margin:20px 0 32px; max-width:60ch; line-height:1.6; font-size:16px}
+  .sub b{color:var(--ink); font-weight:600}
+
+  .meta{display:flex; gap:9px; flex-wrap:wrap; margin-bottom:34px; font-size:12px}
   .chip{
-    background:rgba(59,130,246,.1); border:1px solid var(--line); color:var(--dim);
-    padding:6px 12px; border-radius:999px; font-variant-numeric:tabular-nums;
+    background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));
+    border:1px solid var(--line); color:var(--dim);
+    padding:7px 13px; border-radius:999px; font-variant-numeric:tabular-nums; backdrop-filter:blur(6px);
   }
   .chip b{color:var(--ink); font-weight:600}
-  .chip a{color:var(--cyan); text-decoration:none}
-  .live{display:inline-flex; align-items:center; gap:7px; color:var(--cyan)}
-  .dot{width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 0 rgba(34,211,238,.6); animation:pulse 1.8s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,211,238,.55)}70%{box-shadow:0 0 0 9px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
-  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:26px}
+  .chip a{color:var(--gold2); text-decoration:none; font-family:var(--mono)}
+  .live{display:inline-flex; align-items:center; gap:8px; color:var(--cyan); border-color:rgba(52,224,240,.3)}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 0 rgba(52,224,240,.6); animation:pulse 1.9s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,224,240,.55)}70%{box-shadow:0 0 0 9px rgba(52,224,240,0)}100%{box-shadow:0 0 0 0 rgba(52,224,240,0)}}
+
+  /* hero trophy + supporting stats */
+  .cards{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:16px; margin-bottom:24px}
+  @media(max-width:760px){.cards{grid-template-columns:1fr 1fr}}
   .card{
-    background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:22px;
-    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    position:relative; background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:24px;
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); overflow:hidden;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s, box-shadow .35s;
   }
-  .card .k{font-size:12px; color:var(--dim); letter-spacing:.04em; text-transform:uppercase}
-  .card .v{font-size:clamp(26px,3.5vw,38px); font-weight:700; margin-top:8px; font-variant-numeric:tabular-nums}
-  .card .v.gold{color:var(--gold)} .card .v.cyan{color:var(--cyan)}
-  .card .u{font-size:13px; color:var(--dim); margin-top:4px}
+  .card::before{content:""; position:absolute; inset:0 0 auto 0; height:1px; background:linear-gradient(90deg,transparent,var(--line2),transparent); opacity:.7}
+  .card:hover{transform:translateY(-4px); border-color:var(--line2); box-shadow:0 18px 50px -22px rgba(0,0,0,.8)}
+  .card.hero{
+    grid-row:span 1; background:
+      radial-gradient(120% 130% at 0% 0%, rgba(245,196,81,.16), transparent 55%), var(--panel2);
+    border-color:var(--line2); box-shadow:0 0 50px -28px rgba(245,196,81,.6) inset;
+  }
+  .card .k{font-size:11px; color:var(--faint); letter-spacing:.14em; text-transform:uppercase; font-weight:600}
+  .card .v{font-family:var(--mono); font-size:clamp(24px,3.4vw,34px); font-weight:700; margin-top:12px; font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+  .card.hero .v{font-size:clamp(36px,5.2vw,54px)}
+  .card .v.gold{background:linear-gradient(100deg,var(--gold2),var(--champ)); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .card .v.cyan{color:var(--cyan)}
+  .card .u{font-size:12.5px; color:var(--faint); margin-top:6px}
+
   .panel{
-    background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:6px 4px;
-    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); margin-bottom:22px; overflow:hidden;
+    position:relative; background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:4px 4px 8px;
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); margin-bottom:22px; overflow:hidden;
   }
-  .panel h2{font-size:13px; color:var(--dim); letter-spacing:.12em; text-transform:uppercase; padding:16px 20px 10px}
+  .panel h2{
+    font-family:var(--mono); font-size:11px; color:var(--champ); letter-spacing:.22em; text-transform:uppercase;
+    padding:18px 22px 12px; font-weight:700;
+  }
   table{width:100%; border-collapse:collapse; font-size:14px}
-  th,td{text-align:left; padding:11px 20px; border-top:1px solid var(--line); font-variant-numeric:tabular-nums}
-  th{font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:.08em; border-top:none}
-  td.num{text-align:right; color:var(--gold)}
-  tr td a{color:var(--cyan); text-decoration:none; font-family:ui-monospace,monospace; font-size:12px}
+  th,td{text-align:left; padding:13px 22px; border-top:1px solid var(--line); font-variant-numeric:tabular-nums}
+  th{font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:.1em; border-top:none; font-weight:600}
+  tbody tr{transition:background .2s}
+  tbody tr:hover{background:rgba(245,196,81,.05)}
+  td.num{text-align:right; color:var(--gold2); font-family:var(--mono); font-weight:500}
+  tr td a{color:var(--cyan); text-decoration:none; font-family:var(--mono); font-size:12px}
   tr td a:hover{text-decoration:underline}
-  .empty{padding:26px 20px; color:var(--dim); font-size:14px}
-  .bar{height:5px; border-radius:3px; background:linear-gradient(90deg,var(--arc),var(--cyan)); margin-top:7px}
-  footer{margin-top:34px; color:var(--dim); font-size:12px; line-height:1.6}
-  footer code{color:var(--cyan); font-family:ui-monospace,monospace}
+  .empty{padding:30px 22px; color:var(--dim); font-size:14px}
+  .bar{height:5px; border-radius:3px; background:linear-gradient(90deg,var(--champ),var(--gold2)); margin-top:8px; box-shadow:0 0 12px -2px rgba(245,196,81,.5)}
+  footer{margin-top:38px; color:var(--faint); font-size:12px; line-height:1.7; border-top:1px solid var(--line); padding-top:20px}
+  footer code{color:var(--gold2); font-family:var(--mono)}
   .err{color:#fca5a5}
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="wrap">
   <header>
-    <span class="logo">LEPTON&nbsp;PRESS</span>
+    <span class="logo"><span class="mark"></span>LEPTON&nbsp;PRESS</span>
+    <span class="rule"></span>
   </header>
-  <h1>Per-paragraph revenue, paid by machines, settled on Arc.</h1>
+  <h1>Per-paragraph revenue, paid by <span class="em">machines</span>, settled on Arc.</h1>
   <p class="sub">
     A card payment can't charge a tenth of a cent — the fee floor kills the long tail.
     Here is a publisher earning <b>per paragraph</b> from autonomous AI agents reading its
@@ -90,7 +145,7 @@
   </div>
 
   <div class="cards">
-    <div class="card"><div class="k">Total nano-revenue</div><div class="v gold" id="c-rev">—</div><div class="u">USDC, from agent reads</div></div>
+    <div class="card hero"><div class="k">Total nano-revenue</div><div class="v gold" id="c-rev">—</div><div class="u">USDC, from agent reads</div></div>
     <div class="card"><div class="k">Paragraphs sold</div><div class="v" id="c-set">—</div><div class="u">on-chain settlements</div></div>
     <div class="card"><div class="k">Paying readers</div><div class="v cyan" id="c-rdr">—</div><div class="u">distinct agent streams</div></div>
     <div class="card"><div class="k">Avg / paragraph</div><div class="v" id="c-avg">—</div><div class="u">USDC per settlement</div></div>
@@ -119,13 +174,13 @@ const CFG = {
   rpc:       q.get("rpc")       || "https://rpc.testnet.arc.network",
   chainId:   5042002,
   streamPay: q.get("streampay") || "0x505739d33D85AD85D0f9eeE64856309782382450",
-  // The publisher (StreamPay recipient) whose revenue we display. Set via ?publisher=0x…
-  // or hard-pin here once the demo burner is funded.
+  // The publisher (StreamPay recipient) whose revenue we display. Defaults to the demo
+  // publisher so the bare URL works out of the box; override with ?publisher=0x….
   publisher: q.get("publisher") || "0x0D09cA4F24CF66206f66DA1dc200d213327EEbDc",
   // Arc RPC rejects eth_getLogs over wide ranges, so we scan from startBlock to head in
-  // CHUNK windows. Pin ?start=<block-before-demo> to show full demo history cheaply;
-  // otherwise we look back a modest window so the page stays fast.
-  startBlock: q.get("start") ? Number(q.get("start")) : 48248000,
+  // CHUNK windows. Defaults to the block just before the demo's first stream so the full
+  // history shows cheaply; override with ?start=<block> or ?lookback=<blocks>.
+  startBlock: q.get("start") ? Number(q.get("start")) : 48230000,
   lookback:  q.get("lookback") ? Number(q.get("lookback")) : 30000, // ~5h of Arc blocks
   explorer:  "https://testnet.arcscan.app",
 };
