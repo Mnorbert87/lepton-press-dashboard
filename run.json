@@ -1,0 +1,65 @@
+{
+  "sample": true,
+  "article": "arc-nanopayments",
+  "title": "Why the smallest payment is the hardest one",
+  "task": "why can card networks not serve micropayments, and what changes it",
+  "judge": { "mode": "llm", "model": "claude-opus-4-8" },
+  "reader": "0x2e36F4037E711e1d4c853BBCBF7F526B3714A08a",
+  "publisher": "0x0D09cA4F24CF66206f66DA1dc200d213327EEbDc",
+  "streamId": "—",
+  "budgetUSDC": "0.020000",
+  "explorer": "https://testnet.arcscan.app/tx",
+  "steps": [
+    {
+      "n": 0,
+      "paidUSDC": "0.005000",
+      "tx": "0xcd35c2ace4921557b98522a328ba952fc7297b688103342bd03cdcc41dc71d08",
+      "explorer": "https://testnet.arcscan.app/tx/0xcd35c2ace4921557b98522a328ba952fc7297b688103342bd03cdcc41dc71d08",
+      "relevance": 80,
+      "worthPaying": true,
+      "judge": "Frames the exact question — why anything under ~$0.50 could never be sold. Squarely on task; keep reading.",
+      "text": "For thirty years the web has had exactly one business model that pays writers reliably: bundle the work into something big enough to justify a card charge. A subscription, a course, a paywalled month. Anything cheaper than roughly fifty cents simply could not be sold, because the payment itself cost more than the thing being bought."
+    },
+    {
+      "n": 1,
+      "paidUSDC": "0.003333",
+      "tx": "0xfd978bf3d423ca57bde5f4f57907c3c53d3b095e787b595554da9b089a290593",
+      "explorer": "https://testnet.arcscan.app/tx/0xfd978bf3d423ca57bde5f4f57907c3c53d3b095e787b595554da9b089a290593",
+      "relevance": 86,
+      "worthPaying": true,
+      "judge": "The fixed per-transaction card cost that creates the floor — this is the core mechanism of the 'why'. Worth paying.",
+      "text": "That floor was never a law of nature. It was the cost of moving money through card networks: interchange, gateway fees, fraud reserves, chargeback risk. Those costs are fixed per transaction, so they crush small payments and vanish into large ones. The long tail of writing that is worth a tenth of a cent to a reader has been economically invisible the entire time."
+    },
+    {
+      "n": 2,
+      "paidUSDC": "0.002667",
+      "tx": "0xdba27558448e632fdb5d88e3efdf182dfec21adfb3613ff2f57bbc14aca737bc",
+      "explorer": "https://testnet.arcscan.app/tx/0xdba27558448e632fdb5d88e3efdf182dfec21adfb3613ff2f57bbc14aca737bc",
+      "relevance": 83,
+      "worthPaying": true,
+      "judge": "Stablecoin settlement collapsing the marginal cost of a transfer — this is the 'what changes it' half of the task. Keep going.",
+      "text": "Stablecoins on a settlement-first chain change the arithmetic. When USDC is the native gas token and a block finalises in under a second, the marginal cost of a transfer collapses toward the gas itself. A payment of one millionth of a dollar stops being absurd and becomes routine. The smallest coin of antiquity, the lepton, finally has a digital equivalent."
+    },
+    {
+      "n": 3,
+      "paidUSDC": "0.003333",
+      "tx": "0xf085bd37c2d8353007b3c5714a7002d8273a8f089e770fb3f75d8359fff838ed",
+      "explorer": "https://testnet.arcscan.app/tx/0xf085bd37c2d8353007b3c5714a7002d8273a8f089e770fb3f75d8359fff838ed",
+      "relevance": 48,
+      "worthPaying": true,
+      "judge": "Agents as the first buyers is useful colour, but it drifts from the price mechanics the task asked about. Marginal — one more.",
+      "text": "The first buyers of nanopaid content will not be humans clicking a tip jar. They will be agents: research bots, summarisers, retrieval pipelines that read thousands of sources and would happily pay each one a fraction of a cent rather than scrape it for free. Per-read settlement turns adversarial scraping into a market, and turns every paragraph into a metered good."
+    },
+    {
+      "n": 4,
+      "paidUSDC": "0.004000",
+      "tx": "0x367083c07ffa1007cce17a64fa299052dc367d83ed76927634c59e3cc0515d18",
+      "explorer": "https://testnet.arcscan.app/tx/0x367083c07ffa1007cce17a64fa299052dc367d83ed76927634c59e3cc0515d18",
+      "relevance": 18,
+      "worthPaying": false,
+      "judge": "Pivots to the implementation spec — no longer answering 'why card rails can't, and what changes it'. Not worth paying further; stop.",
+      "text": "What this needs is not a new token but a new toll booth: a way for a publisher to charge a machine per paragraph, prove the payment on chain, and release the text only after the money has actually vested. That is the whole of Lepton Press, and the rest of this article is the spec."
+    }
+  ],
+  "totals": { "paragraphsPaidFor": 5, "spentUSDC": "0.018333", "stopReason": "task saturated — stopped paying" }
+}
